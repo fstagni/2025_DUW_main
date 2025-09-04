@@ -28,6 +28,78 @@ color: lime-light
     <img id="DiracX" src="https://raw.githubusercontent.com/DIRACGrid/management/master/branding/diracx/svg/diracx-logo-full.svg" alt="DiracX" style="width: 300px;">
 </div>
 
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: Timeline
+---
+
+:: title ::
+
+# Timeline
+
+:: content ::
+
+```mermaid {scale:0.7}
+%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
+    timeline
+        section DIRAC only (DIRAC v8)
+            Q3 2023 : First DiracX demo
+            Q2 2025 : LHCb deploys in production alpha versions of DIRAC (v9.0.0aX) and DiracX (v0.1.0aX)
+                    : All existing DiracX components are tested and extended.
+                    : Several scalability and performance improvements were addressed
+        section DIRAC and DiracX coexisting (forcefully)
+            September 2025 : Release of DIRAC v9.0 and DiracX 0.1
+                           : JobStateUpdate service migrated and tested
+                           : Pilot and JobMonitoring services migrated to DiracX (being tested) -- DiracX-Web first practical usage (Jobs Monitoring)
+                           : Possible adoption by non-LHCb DIRAC users
+            Q3 2026 : Release of DIRAC v9.1 and DiracX 0.2
+                    : DiracX introduces a task management system
+                    : First DiracX-only service. Adoption of new Pilot security mechanism
+                    : DIRAC v8 EOL
+        section Possible standalone DiracX
+            Q4 2027 : Release DiracX v1.0
+                    : DiracX tasks management used for replacing DIRAC agents. Focus on Workload Management functionalitiess
+```
+
+---
+layout: top-title-two-cols
+color: gray-light
+align: c-lm-lm
+title: DiracX v0.1.0
+---
+
+:: title ::
+
+# Getting to **DiracX 0.1.0**
+
+:: left ::
+
+This first release contains:
+* All service/client underpinnings
+* Extension support
+* Sandboxes in the object store
+* JobStateUpdateHandler can be replaced by DiracX
+* "Stable" helm chart
+* Documentation sufficiently complete
+
+:: right ::
+
+Apart from the many technical details, DiracX brings with it a new "mindset":
+* a cloud-native app
+* from "in-house" to "standing-on-the-shoulders"
+
+
+---
+layout: section
+color: cyan-light
+title: toV9
+---
+
+# From DIRAC v8 to v9+0.1.0
+
 ---
 layout: side-title
 color: gray-light
@@ -45,115 +117,119 @@ titlewidth: is-3
 
 <img id="D_X" src="/public/images/architecture.png" class="mx-auto"> </img>
 
+---
+layout: section
+color: cyan
+title: toV9-users
+---
+
+# From DIRAC v8 to v9+0.1.0 : Users
 
 ---
 layout: top-title
 color: gray-light
 align: c
-title: Versions
+title: Users-WhatsNew
+---
+
+:: title :: 
+
+# What's new for users
+
+:: content ::
+
+- **Logging-in** requires that you are previously registered in an IdP (your admins should have done this for you -- essentially from VOMS)
+- New **Web app**
+- Enriched and modern **CLI**
+- **REST** interface for programmatic usage
+
+But effectively, for now **users can largely be agnostic** of DiracX, as for the first version users' interactions will still be done via the DIRAC tools they know (and love?)
+
+Users' env variables (`DIRACX_URL`)
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: CLI
 ---
 
 :: title ::
 
-# Versions
+# CLI Interactions
 
 :: content ::
 
-```mermaid
-%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
-timeline
-    May 2022 : DIRAC v8.0
-    Oct 2023 : EOL DIRAC v7.3
-             : First DiracX demo
-    Q1 2025  : DIRAC v9.0
-             : DiracX v0.0.1
-             : can start using DiracX services
+1. Logging in (using the `diracx cli`):
+
+```bash
+❯ dirac login gridpp
+Logging in with scopes: ['vo:gridpp']
+Now go to: https://diracx-cert.app.cern.ch/api/auth/device?user_code=XYZXYZXYZ
+...Saved credentials to /home/fstagni/.cache/diracx/credentials.json
+Login successful!
 ```
 
-<SpeechBubble position="r" color='cyan' shape="round"  v-drag="[20,211,148,240]">
-Current production and only supported version, used by all DIRAC installations
-</SpeechBubble>
+2. Submitting a job (using Python `requests`):
 
+```python
+import requests
 
-<SpeechBubble position="l" color='amber' shape="round"  v-drag="[780,265,140,175]">
-DIRAC v9 and DiracX 0.0.1 will be released together.
-</SpeechBubble>
+requests.post('https://diracx-cert.app.cern.ch/api/jobs/', headers={'accept': 'application/json', 'Authorization': 'Bearer eyJhbG...', 'Content-Type': 'application/json'}, json=jdl)
+```
 
----
-layout: top-title-two-cols
-color: gray-light
-align: c-lm-lm
-title: DiracX v0.0.1
----
+3. Getting its status (using `curl`):
 
-:: title ::
-
-# Getting to **DiracX 0.0.1** -- [road map](https://github.com/DIRACGrid/diracx/blob/main/docs/ROADMAP.MD)
-
-:: left ::
-
-* First release contains:
-    * All service/client underpinnings
-    * Extension support
-    * JobStateUpdateHandler can be replaced by DiracX
-
-:: right ::
-
-**To complete before declaring that is "ready"**
-
-- [ ] Finish any DIRAC v9 cleanups
-- [ ] Get LHCbDIRAC certification running stably with DIRAC v9
-- [ ] Finish legacy adapter for JobStateUpdateClient
-- [ ] Admin VO
-- [ ] Ensure the helm chart is stable for updates
-- [ ] Make sure the docs are complete
-
----
-layout: top-title
-color: gray-light
-align: cm
-title: Status
----
-
-:: title ::
-
-# Today's status
-
-:: content ::
-
-- 
-
----
-layout: top-title
-color: gray-light
-align: cm
-title: v9
----
-
-:: title ::
-
-# And which functionalities are in **DIRAC v9**?
-
-:: content ::
-
-- The concept of "Setup" is disappearing
-- You will need OpenSearch (or ElasticSearch)
-- Using DIRAC's RSS (Resource Status System) is mandatory
-- DIRAC's ARC and ARC6 Computing Element are not supported anymore
-
-&nbsp;
-&nbsp;
-
-
-Basically: no new functionalities, but many changes for DiracX. Lots of database schema changes.
+````md magic-move
+```bash
+curl -X 'GET' \
+  'https://diracx-cert.app.cern.ch/api/jobs/status?job_ids=8971' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbG...'  | jq
+```
+```json
+{
+  "8971": {
+    "Status": "Done",
+    "MinorStatus": "Execution Complete",
+    "ApplicationStatus": "Unknown"
+  }
+}
+```
+````
 
 ---
 layout: section
-color: cyan-light
-title: toV9
+color: cyan
+title: toV9-administrator
 ---
 
-# From DIRAC v8 to v9+0.0.1
+# From DIRAC v8 to v9+0.1.0 : Administrators
+
+
+---
+layout: side-title
+color: gray-light
+title: Externals
+align: cm-lm
+titlewidth: is-3
+---
+
+
+:: title ::
+
+# Tools
+
+:: content ::
+
+Architecturally, you can't run DiracX without:
+* MySQL (this you always had -- no need to touch it)
+* OpenSearch (you *should* have it already)
+* Kubernetes (**NEW**)
+* S3-compatible object store (**NEW**)
+
+so, make sure the above are up and running as-a-service.
+
 
 ---
 layout: top-title-two-cols
@@ -208,7 +284,7 @@ Helm <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-hel
 
 
 <StickyNote color="gray-light" textAlign="center" width="260px" title="What to run on K8" v-drag="[175,430,600,100]">
-The helm charts provide "everything", inclusing MySQL and Opensearch. You are in no obligation to run all available services on K8
+The helm charts provide "everything", including MySQL and Opensearch. You are in no obligation to run all available services on K8 -- and you shouldn't!
 </StickyNote>
 
 
@@ -237,7 +313,36 @@ Use this [skeleton](https://codimd.web.cern.ch/5C44tUJTReacVOcIn_0Bfg#), but fir
 - if you have a WebAppDIRAC extension:
   - code an "empty" `vodiracx-web` extension
 - have a k8 project ready for hosting (vo)diracx
+- have a S3 storage ready for storing sandboxes
 - deploy (vo)diracx 
+
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: CS
+---
+
+:: title ::
+
+### CS changes
+
+:: content ::
+
+- IdP
+- Legacy adaptors
+
+
+
+---
+layout: section
+color: cyan
+title: toV9-developer
+---
+
+# From DIRAC v8 to v9+0.1.0 : Developers
+
 
 ---
 layout: top-title
@@ -271,57 +376,6 @@ JobDB = "<extension>.db.sql:ExtendedJobDB"
 For DiracX and DiracX-Web we already provide reference extensions
 </SpeechBubble>
 
-
----
-layout: top-title
-color: gray-light
-align: c
-title: Migration
----
-
-:: title ::
-
-### Business continuity for DIRAC communities is our top priority
-Services of DIRAC v9 and DiracX will need to live together for some time
-
-
-:: content ::
-
-<Arrow x1="300" y1="170" x2="370" y2="170" />
-<Line :x1=345 :y1=200 :x2=345 :y2=500 :width=1 />
-
-<Arrow x1="610" y1="170" x2="680" y2="170" />
-<Line :x1=633 :y1=200 :x2=633 :y2=500 :width=1 />
-
-<div style="display: flex; align-items: center; justify-content: center;">
-    <img id="D_X" src="/public/images/legacy_before_Adaptor.png" class="mx-auto w-1/4"> </img>
-    <img id="D_Ad" src="/public/images/legaxyAdaptor.png" class="mx-auto w-1/4"> </img>
-    <img id="X" src="/public/images/legacy_after_Adaptor.png" class="mx-auto w-1/4"> </img>
-</div>
-
-<SpeechBubble position="r" color='cyan' shape="round"  v-drag="[100,350,40,60]">
-1
-</SpeechBubble>
-
-<SpeechBubble position="r" color='cyan' shape="round"  v-drag="[370,350,40,60]">
-2
-</SpeechBubble>
-
-<SpeechBubble position="r" color='cyan' shape="round"  v-drag="[660,350,40,60]">
-3
-</SpeechBubble>
-
-<SpeechBubble position="t" color='amber' shape="round"  v-drag="[160,350,120,180]">
-DIRAC and DiracX share the databases
-</SpeechBubble>
-
-<SpeechBubble position="t" color='amber' shape="round"  v-drag="[430,350,160,180]">
-A legacy adaptor moves traffic from DIRAC to DiracX services
-</SpeechBubble>
-
-<SpeechBubble position="t" color='amber' shape="round"  v-drag="[720,350,120,140]">
-DIRAC services can be removed
-</SpeechBubble>
 
 ---
 layout: section
@@ -368,58 +422,6 @@ DIRAC Web APIs with <devicon-fastapi-wordmark class="text-7xl align-middle inlin
 - there is also redoc
 - AutoREST supports several langagues, not only python
 -->
-
-
----
-layout: top-title
-color: gray-light
-align: c
-title: CLI
----
-
-:: title ::
-
-# CLI Interactions
-
-:: content ::
-
-1. Logging in (using the `diracx cli`):
-
-```bash
-❯ dirac login gridpp
-Logging in with scopes: ['vo:gridpp']
-Now go to: https://diracx-cert.app.cern.ch/api/auth/device?user_code=XYZXYZXYZ
-...Saved credentials to /home/fstagni/.cache/diracx/credentials.json
-Login successful!
-```
-
-2. Submitting a job (using Python `requests`):
-
-```python
-import requests
-
-requests.post('https://diracx-cert.app.cern.ch/api/jobs/', headers={'accept': 'application/json', 'Authorization': 'Bearer eyJhbG...', 'Content-Type': 'application/json'}, json=jdl)
-```
-
-3. Getting its status (using `curl`):
-
-````md magic-move
-```bash
-curl -X 'GET' \
-  'https://diracx-cert.app.cern.ch/api/jobs/status?job_ids=8971' \
-  -H 'accept: application/json' \
-  -H 'Authorization: Bearer eyJhbG...'  | jq
-```
-```json
-{
-  "8971": {
-    "Status": "Done",
-    "MinorStatus": "Execution Complete",
-    "ApplicationStatus": "Unknown"
-  }
-}
-```
-````
 
 
 ---
@@ -507,22 +509,16 @@ diracx-charts/run_demo.sh # this is run for each and every commit in Github Acti
   <li><strong>meetings</strong>: (almost) every week on Thursday morning (CET)</li>
   <li><strong>hackathons</strong>: we have been doing 2-days DiracX hackathons every quarter, at CERN
     <ul class="text-xs ml-4">
-      <li>--> <a href="https://indico.cern.ch/event/1458873/" class="text-blue-600 hover:underline">Last one yesterday and the day before</a></li>
-      <li>--> <a href="https://indico.cern.ch/event/1443765/" class="text-blue-600 hover:underline">Next will be in April</a></li>
+      <li>--> <a href="https://indico.cern.ch/event/1582395/" class="text-blue-600 hover:underline">Next will be 13th-14th January 2026</a></li>
     </ul>
   </li>
   <li><strong>workshops</strong>: once per year, more or less
     <ul class="text-xs ml-4">
-      <li>--> <a href="https://indico.cern.ch/event/1433941/" class="text-blue-600 hover:underline">Next one in September 2025, in Beijing</a></li>
+      <li>--> <a href="https://indico.cern.ch/event/1433941/" class="text-blue-600 hover:underline">Next one in 2026, in "To be disclosed"</a></li>
     </ul>
   </li>
 </ul>
 
-
-
-<!-- 
-- You might have seen that we set up 2 VOs: **gridpp** and **dteam**. For **dteam** we do not import all members, but if you want to...
--->
 
 
 
@@ -544,10 +540,7 @@ title: summary
 :: right ::
 
 <ul class="text-base">
-  <li>DiracX is "the neXt Dirac incarnation", ensuring the future of the widely used Dirac
-    <ul class="text-sm">
-      <li>We are rewriting the code, but it is still Dirac that you love!</li>
-    </ul>
+  <li>DiracX, "the neXt Dirac incarnation", is here!
   </li>
 </ul>
 

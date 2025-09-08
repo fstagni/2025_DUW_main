@@ -42,7 +42,7 @@ title: Timeline
 
 :: content ::
 
-```mermaid {scale:0.7}
+```mermaid {scale:0.5}
 %%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
     timeline
         section DIRAC only (DIRAC v8)
@@ -63,6 +63,10 @@ title: Timeline
             Q4 2027 : Release DiracX v1.0
                     : DiracX tasks management used for replacing DIRAC agents. Focus on Workload Management functionalitiess
 ```
+
+<SpeechBubble position="l" color='amber' shape="round"  v-drag="[780,165,160,250]">
+NB: **very** indicative guess. Not for everyone (e.g. not for LHCb).
+</SpeechBubble>
 
 ---
 layout: top-title-two-cols
@@ -91,6 +95,8 @@ Apart from the many technical details, DiracX brings with it a new "mindset":
 * a cloud-native app
 * from "in-house" to "standing-on-the-shoulders"
 
+We will keep working, within the patches of this first version, on adding new services and documentation.
+
 
 ---
 layout: section
@@ -100,22 +106,32 @@ title: toV9
 
 # From DIRAC v8 to v9+0.1.0
 
+
 ---
-layout: side-title
+layout: top-title
 color: gray-light
-title: Architecture
-align: cm-lm
-titlewidth: is-3
+align: c
+title: Users-WhatsNew
 ---
 
+:: title :: 
 
-:: title ::
-
-# Architecture diagram
+# What's new 
 
 :: content ::
 
-<img id="D_X" src="/public/images/architecture.png" class="mx-auto"> </img>
+DiracX brings updates for
+
+- Users
+- Administrators
+- Developers
+
+As of now, we are more concerned about solving administrator's issues.
+
+Developers "need to know" already if you have an DIRAC (or WebAppDIRAC) extension.
+
+Users "do not yet need to know".
+
 
 ---
 layout: section
@@ -138,14 +154,17 @@ title: Users-WhatsNew
 
 :: content ::
 
-- **Logging-in** requires that you are previously registered in an IdP (your admins should have done this for you -- essentially from VOMS)
-- New **Web app**
-- Enriched and modern **CLI**
-- **REST** interface for programmatic usage
+- **Logging-in** requires that you are previously registered in an IdP implementing OpenID Connect protocol
+  - essentially this is the VOMS->IaM migration. Admins should have done this already, transparently, for all the users of a VO
+  - if a VO is not migrated to IaM, it can't be "enabled" (see later on)
+- New **Web app** (which, for DiracX 0.1 will not be of much use)
+- Enriched and modern **CLI** (but not many functionalities in there)
+- **REST** interface for programmatic usage (for advanced users -- but again, not much user-facing info to use)
 
 But effectively, for now **users can largely be agnostic** of DiracX, as for the first version users' interactions will still be done via the DIRAC tools they know (and love?)
 
-Users' env variables (`DIRACX_URL`)
+Also, users' should be setting the correct environment variables (`DIRACX_URL` mostly)
+- admins should be setting it already for the users
 
 ---
 layout: top-title
@@ -224,53 +243,55 @@ titlewidth: is-3
 
 Architecturally, you can't run DiracX without:
 * MySQL (this you always had -- no need to touch it)
+  * DiracX 0.1 has only one new DB `DiracXAuthDB` (containing tokens)
 * OpenSearch (you *should* have it already)
 * Kubernetes (**NEW**)
 * S3-compatible object store (**NEW**)
 
 so, make sure the above are up and running as-a-service.
 
+<AdmonitionType type="important" width="300px">
+The central team can not fully help in setting up any of the above. We nevertheless provide a K8 setup guide, and we can give few specific advices - ask us these days!
+</AdmonitionType>
+
+---
+layout: iframe-right
+color: gray-light
+title: k8
+url: https://diracx.diracgrid.org/en/latest/admin/how-to/install/install-kubernetes/
+---
+
+# On Kubernetes <devicon-kubernetes class="text-3xl align-middle inline-block mx-0"></devicon-kubernetes>
+
+```mermaid
+flowchart TD
+    C{Can you use an existing K8 service?}
+    C -->|Yes| D[Do it!]
+    C -->|No| E[Use K3S, follow the provided guide]
+
+```
+
+<AdmonitionType type="info" width="300px">
+You do not really need to have K3S on more than one node (if that's "beefy")
+</AdmonitionType>
+
+
 
 ---
 layout: top-title-two-cols
 color: gray-light
 align: c-lm-lm
-title: Deployments
+title: chart
 ---
 
 :: title :: 
 
-# DiracX is deployed on Kubernetes
+# Helm <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-helm>
 
 :: left ::
 
-Kubernetes - <devicon-kubernetes class="text-3xl align-middle inline-block mx-0"></devicon-kubernetes> Standard to define a distributed system
-
-<ul class="text-sm">
-  <li>Separates infrastructure from applications
-    <ul>
-      <li class="text-xs">"Please IT department(/cloud provider) run this for me"</li>
-    </ul>
-  </li>
-</ul>
-
-
-Helm <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-helm> gives the ability:
-
-<ul class="text-sm">
-  <li>to parameterise</li>
-  <li>to distribute a kubernetes config</li>
-</ul>
-
-:: right ::
-
 <ul class="text-sm">
   <li><a href="https://github.com/DIRACGrid/diracx-charts">DiracX Helm chart</a>
-    <ul>
-      <li>If your institution provides a kubernetes service: use it</li>
-      <li>If you work with public clouds: use their container services</li>
-      <li>Alternatively, follow these <a href="https://github.com/DIRACGrid/diracx-charts/tree/master/k3s">k3s instructions</a></li>
-    </ul>
   </li>
   <li>Used for:
     <ul>
@@ -281,6 +302,11 @@ Helm <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-hel
     </ul>
   </li>
 </ul>
+
+Unique pointer for charts: https://charts.diracgrid.org/index.yaml
+
+:: right ::
+
 
 
 <StickyNote color="gray-light" textAlign="center" width="260px" title="What to run on K8" v-drag="[175,430,600,100]">
@@ -302,19 +328,7 @@ title: v9-migration
 
 :: content ::
 
-Use this [skeleton](https://codimd.web.cern.ch/5C44tUJTReacVOcIn_0Bfg#), but first of all:
-
-- You need an IdP (IAM...) -- you probably already have one instance!
-  - Probably one for every VO you host (?)
-- Register a DiracX `client` in the IdP, will be needed in order for DiracX (server) to authenticate
-- if you have a VODIRAC extension:
-  - update it considering the many changes.
-  - code an "empty" `vodiracx` extension
-- if you have a WebAppDIRAC extension:
-  - code an "empty" `vodiracx-web` extension
-- have a k8 project ready for hosting (vo)diracx
-- have a S3 storage ready for storing sandboxes
-- deploy (vo)diracx 
+Use this [skeleton](https://codimd.web.cern.ch/5C44tUJTReacVOcIn_0Bfg#)
 
 
 ---
@@ -456,11 +470,48 @@ title: LHCb
 
 :: title ::
 
-# LHCbDIRAC and LHCbDiracX
+# The LHCb case
 
 :: content ::
 
-# show extensions "live"
+![LHCb everywhere](/public/images/LHCb_everywhere.jpg)
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: LHCb_migration
+---
+
+:: title ::
+
+# The LHCb case
+
+:: content ::
+
+- LHCb migrated to DIRAC v9 + DiracX 0.1 (alpha) back in April
+  - before data taking restarted
+  - effectively, 1 week of downtime
+  - we "profited" also for making (too) many **optional** MySQL updates
+    - this is what took **by far** most of the update time
+  - reported in BiLD https://indico.cern.ch/event/1531451/
+  - several fixes/updates followed
+  - running in productions with alpha versions since
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: LHCb_migration
+---
+
+:: title ::
+
+# The LHCb case
+
+:: content ::
+
+
 
 ---
 layout: section

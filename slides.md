@@ -545,6 +545,16 @@ title: v9-migration
 
 Use this [skeleton](https://codimd.web.cern.ch/5C44tUJTReacVOcIn_0Bfg#)
 
+NB:
+- There's quite some preparatory work, and anyway you should do it first on your test setup
+- You will need to adapt the skeleton above to your needs (copy-paste-edit)
+  - To avoid mistakes, atm this skeleton is "locked" - meaning that only the owner (fstagni) can edit
+    - might re-open for this workshop if many contributors
+- There are **many** database changes/updates
+  - the order in which they are done inside the upgrade guide is meaningful, do not change the order!
+- **You will need a downtime** (at a minimum, do not let users or agents submit new jobs)
+  - no need to completely drain the system before: the running jobs will *eventually* complete
+
 
 ---
 layout: top-title
@@ -788,11 +798,10 @@ diracx-charts/run_demo.sh # this is run for each and every commit in Github Acti
   </li>
   <li><strong>workshops</strong>: once per year, more or less
     <ul class="text-xs ml-4">
-      <li>--> <a href="https://indico.cern.ch/event/1433941/" class="text-blue-600 hover:underline">Next one in 2026, in "To be disclosed"</a></li>
+      <li>--> <a href="https://indico.cern.ch/event/1433941/" class="text-blue-600 hover:underline">Next one in October 2026, in "To be disclosed"</a></li>
     </ul>
   </li>
 </ul>
-
 
 
 

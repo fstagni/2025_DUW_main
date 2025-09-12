@@ -37,11 +37,11 @@ title: summary
 
 :: title ::
 
-# Extreme summary of what happened since the last workshop
+# Extreme summary of what happened since the last workshop (a somewhat personal take)
 
 :: left ::
 
-```mermaid {scale:0.4}
+```mermaid {scale:0.5}
 %%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
     timeline
         section DIRAC only (DIRAC v8)
@@ -57,8 +57,6 @@ title: summary
 ```
 
 :: right ::
-
-(a somewhat personal take)
 
 - We kept doing 2-days hackathons every quarter
   - if not during workshops, at CERN, and with good participation
@@ -114,7 +112,7 @@ columns: is-8
 
 :: left ::
 
-```mermaid {scale:0.5}
+```mermaid {scale:0.6}
 %%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
     timeline
         section DIRAC and DiracX coexisting (forcefully)
@@ -152,7 +150,7 @@ title: Timeline-long
 
 :: left ::
 
-```mermaid {scale:0.5}
+```mermaid {scale:0.6}
 %%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
     timeline
         section DIRAC and DiracX coexisting (forcefully)
@@ -161,7 +159,7 @@ title: Timeline-long
             Q4 2027 : DiracX v1.0
 ```
 
-<SpeechBubble position="l" color='amber' shape="round"  v-drag="[330,125,160,180]">
+<SpeechBubble position="l" color='amber' shape="round"  v-drag="[340,125,160,180]">
 NB: **very** indicative guess, maybe not for everyone (e.g. not for LHCb).
 </SpeechBubble>
 
@@ -247,7 +245,7 @@ title: toV9
 
 
 ---
-layout: top-title
+layout: top-title-two-cols
 color: gray-light
 align: c
 title: Users-WhatsNew
@@ -257,15 +255,17 @@ title: Users-WhatsNew
 
 # What's new 
 
-:: content ::
+:: left ::
 
-DiracX brings updates for
+### DiracX brings updates for
 
 - Users
 - Administrators
 - Developers
 
-As of now:
+:: right ::
+
+### As of now:
 - we are more concerned about solving **administrator**'s issues.
 - **Developers** "need to know" already if you have an DIRAC (or WebAppDIRAC) extension.
 - **Users** "do not yet need to know".
@@ -484,7 +484,7 @@ title: admins-notes
     Maybe CERN ?
 
   </p>
-  <p style="text-align:right; margin-top:30px;">
+  <p style="text-align:right; margin-top:20px;">
     With love and affection<br>
   </p>
 </div>
@@ -560,18 +560,57 @@ NB:
 layout: top-title
 color: gray-light
 align: c
-title: CS
+title: FAQ
 ---
 
 :: title ::
 
-### CS changes
+# FAQ
 
 :: content ::
 
-- IdP
-- Legacy adaptors
+* Can I move to DIRAC v9 without deploying DiracX?
+  * No
+* What if one or more of the VOs I manage is not migrated to IAM?
+  * Add it in CS to the list of `DiracX/DisabledVO` (which, by default, is empty)
+* Will users notice?
+  * Only if they really want
 
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: config
+---
+
+:: title ::
+
+# The DiracX configuration
+
+:: content ::
+
+- differences with DIRAC Config
+- entrypoints
+- env variables
+- the DIRAC CS is still meaningful
+
+---
+layout: iframe-right
+title: Web API
+url: https://diracx.diracgrid.org/en/latest/admin/how-to/install/embracing/
+class: webAPI
+slide_info: false
+color: gray-light
+align: lm
+---
+
+
+# CS changes
+
+- IdP
+- sandboxes
+- Legacy adaptors
 
 
 ---
@@ -586,21 +625,168 @@ title: toV9-developer
 layout: top-title
 color: gray-light
 align: c
-title: DevX
+title: v9Devs
 ---
 
 :: title ::
 
-# On developing DiracX
+# DIRAC v9: developments
 
 :: content ::
 
-Reminders:
-- sqlalchemy
-- fastapi for the services
-- click (?) and rich for the CLI
+- Removing the concept of `Setup` (e.g. "LHCb-Production")
+  - you might need to adapt your extension to it
+- VMDIRAC is no more
+- RSS is mandatory
+- Opensearch for jobs paramers is mandatory
+- ARC and ARC6 have been removed, only use AREX
+- In general, many DB changes and large-ish refactoring
 
-- pixi
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: DIRACCommon
+---
+
+:: title ::
+
+# DIRACCommon : a new package for holding stateless DIRAC utilities
+
+:: content ::
+
+- Since DiracX can't reliably depend on DIRAC without triggering DIRAC's global state initialization
+- Lives [inside DIRAC code](https://github.com/DIRACGrid/DIRAC/tree/integration/dirac-common)
+- Every time DIRAC is tagged, DIRACCommon is tagged too (yes, a bit of an overkill...)
+- Do `pip install DIRACCommon` in your local DIRAC conda environment now
+  - **maybe** you will need a `extensionDIRACCommon` package, but most probably not
+
+---
+layout: top-title-two-cols
+color: gray-light
+title: codeSructure
+align: c-lm-lm
+---
+
+:: title ::
+
+# Code structure
+
+:: left ::
+![alt text](/public/images/code_structure.png)
+
+:: right :: 
+
+- 8 packages: `diracx-[core, db, logic, routers, api, cli, client, testing]`
+  - will be 9 with `diracx-tasks`
+- all of them on [pipy](https://pypi.org/search/?q=diracx), all them tagged at the same time
+  - for good practice and [isolation](https://github.com/DIRACGrid/diracx/issues/348)
+- each of them have "actual code" in `diracx-$name/src/dirac/$name`
+
+
+---
+layout: top-title
+color: gray-light
+title: codeDependencies
+align: c
+---
+
+:: title ::
+
+# Package dependencies
+
+:: content ::
+
+```mermaid
+flowchart LR
+    dbs["diracx-dbs (sqlalchemy/os)"] -- uses --> core["diracx-core (domain)"]
+    logic["diracx-logic (Dirac)"] -- uses --> dbs & core
+    services["diracx-services (FastAPI)"] -- uses --> logic & core
+    services -- generates --> openapi["OpenAPI"]
+    tasks["diracx-tasks (celery?)"] -- uses  --> logic & core
+    client["diracx-client (autorest)"] -- consumes --> openapi
+    client -- uses --> core
+    api["diracx-api"] -- uses --> client
+    cli["diracx-cli (typer)"] -- uses --> api & client
+     dbs:::Pine
+     logic:::Pine
+     services:::Pine
+     openapi:::Rose
+     tasks:::Pine
+     client:::Sky
+     api:::Sky
+     cli:::Sky
+    classDef Rose stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
+    classDef Sky stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
+    classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
+```
+
+
+---
+layout: iframe-right
+title: DevX
+url: https://diracx.diracgrid.org/en/latest/dev/tutorials/getting-started/
+class: DevX
+slide_info: false
+color: gray-light
+align: lm
+---
+
+# On developing DiracX
+
+Start with the "Getting Started" guide here on the right. for which you'll basically only need [pixi](https://pixi.sh) -- `pixi` is what DiracX is using instead of conda/mamba/etc (it's basically its successor)
+
+To go further, remember that:
+- for developing databases, you should have a grasp of [sqlalchemy](https://www.sqlalchemy.org/)
+  - we do not use the ORM, just the **Core** part
+- In order to develop routers (the "services"), you should have a grasp of [fastapi](https://fastapi.tiangolo.com/)
+- DiracX uses [typer](https://typer.tiangolo.com/) and [rich](https://rich.readthedocs.io/en/latest/) for beautiful CLI
+- In general, you should have an idea about [pydantic](https://docs.pydantic.dev/latest/)
+
+
+
+---
+layout: iframe-right
+title: Client
+url: https://diracx.diracgrid.org/en/latest/dev/how-to/client-generation/
+class: Client
+slide_info: false
+color: gray-light
+align: lm
+---
+
+Since `FastAPI` includes built-in support for [OpenAPI](https://spec.openapis.org/oas/v3.0.3) specifications, the `client` can be generated by [autorest](https://github.com/Azure/AutoRest)
+
+- several languages suppported. Within the DiracX repo we include the python client
+  - if you want to generate a client in another language (e.g. because your third-party application is developed in Java or Go), you are one CI item away
+- depending on what you do, the client will need to be regenerated
+  - e.g. if you change one route
+
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: Developing
+---
+
+:: title ::
+
+# Today's developments (what you can do **NOW**)
+
+:: content ::
+
+few notes:
+1. if you do not feel like studying stuff like SQLAlchemy or FastAPI, there are still many maintenance tasks to do, e.g.
+  - improve the CIs
+  - documentation (which can be sometime auto-created)
+2. the diracx-charts need improvements (won't be covered within this presentation)
+3. diracx-web will be covered later today
+4. developing a route in diracx is a necessary step for being used, but it is not enough:
+  - a *Legacy Adaptor* will need to be added to DIRAC
+  - some refactoring to DIRAC will probably be necessary
+
 
 
 ---
@@ -734,7 +920,7 @@ align: lm
 
 # DiracX web
 
-We are also rewriting [the Web App](https://github.com/DIRACGrid/diracx-web) from scratch.
+We are also rewriting [the Web App](https://github.com/DIRACGrid/diracx-web) from scratch, see the pres from Ryun later today
 
 Software stack:
 - NextJS <devicon-nextjs-wordmark class="text-4xl align-middle inline-block mx-2" />

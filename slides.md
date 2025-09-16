@@ -28,6 +28,16 @@ color: lime-light
     <img id="DiracX" src="https://raw.githubusercontent.com/DIRACGrid/management/master/branding/diracx/svg/diracx-logo-full.svg" alt="DiracX" style="width: 300px;">
 </div>
 
+
+---
+layout: section
+color: cyan-light
+title: toV9
+---
+
+# From DIRAC v8 to v9+0.0.1
+
+
 ---
 layout: top-title-two-cols
 color: gray-light
@@ -46,14 +56,13 @@ title: summary
     timeline
         section DIRAC only (DIRAC v8)
             Q2 2022 : DIRAC v8.0
-            Q3 2023 : First DiracX demo
+            Q4 2023 : First DiracX demo
             Q2 2025 : LHCb deploys in production alpha versions of DIRAC (v9.0.0aX) and DiracX (v0.0.1aX)
                     : All existing DiracX components are tested and extended.
                     : Several scalability and performance issues were addressed
         section DIRAC and DiracX coexisting (forcefully)
-            Last week (Sept 2025) : Release of DIRAC v9.0 and DiracX 0.0.1
-                                  : JobStateUpdate service migrated and tested
-                                  : Possible adoption by non-LHCb DIRAC users
+            Now (Sept 2025) : Release of DIRAC v9.0 and DiracX 0.0.1
+                            : Possible adoption by non-LHCb DIRAC users
 ```
 
 :: right ::
@@ -61,8 +70,7 @@ title: summary
 - We kept doing 2-days hackathons every quarter
   - if not during workshops, at CERN, and with good participation
 - DIRAC v8 kept receiving updates, but most of them were "for DiracX" 
-- In April 2025 LHCb moved the production setup to DIRAC v9 and DiracX 0.0.1 alpha versions
-- We kept postponing "real" releases for excellent technical reasons, until last week, when we tagged the first non-alpha versions of v9 and DiracX
+- We kept postponing "real" releases for excellent technical reasons
 
 
 
@@ -88,7 +96,7 @@ columns: is-8
 * The helm chart is considered "stable enough"
 * Documentation "sufficiently complete"
 
-We will keep working, within the patches of this first version, on adding new services and documentation.
+We will keep working, within this first version, on adding new services and documentation.
 
 
 :: right ::
@@ -102,152 +110,6 @@ We will keep working, within the patches of this first version, on adding new se
 layout: top-title-two-cols
 color: gray-light
 align: c-lm-lm
-title: Timeline
-columns: is-8
----
-
-:: title ::
-
-# Timeline of the next year
-
-:: left ::
-
-```mermaid {scale:0.6}
-%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
-    timeline
-        section DIRAC and DiracX coexisting (forcefully)
-            Last week (Sept 2025) : Release of DIRAC v9.0 and DiracX 0.0.1
-                                  : JobStateUpdate service migrated and tested
-                                  : Possible adoption by non-LHCb DIRAC users
-            This or next week : Release DiracX 0.0.2
-                              : Pilot and JobMonitoring services migrated to DiracX (being tested) -- DiracX-Web first practical usage (Jobs Monitoring)
-            Q1 2026 : Release DiracX 0.1.0
-                    : DiracX introduces a task management system
-            Q3 2026 : Release DIRAC v9.1 and 0.1.X (or 0.2.0)
-                    : First DiracX-only service. 
-                    : Adoption of new Pilot security mechanism
-                    : First DiracX replacements for DIRAC agents or executors using DiracX tasks
-```
-
-:: right ::
-
-- There are developments done by stagiare that could not be included in DiracX's first release
-- DiracX 0.1.0 will bring "tasks", for replacing DIRAC's *agents*, *executors*, and the RMS machinery (the *RequestExecutingAgent*)
-- We will need a DIRAC v9.1 because there will be database changes (some PRs already in *draft*)
-
-
-
----
-layout: top-title-two-cols
-color: gray-light
-align: c-lm-lm
-title: Timeline-long
----
-
-:: title ::
-
-# Standalone DiracX will take at least 2 years from now
-
-:: left ::
-
-```mermaid {scale:0.6}
-%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
-    timeline
-        section DIRAC and DiracX coexisting (forcefully)
-            Q4 2026 : DIRAC v8 EOL (by the next workshop)
-        section Possible standalone DiracX
-            Q4 2027 : DiracX v1.0
-```
-
-<SpeechBubble position="l" color='amber' shape="round"  v-drag="[340,125,160,180]">
-NB: **very** indicative guess, maybe not for everyone (e.g. not for LHCb).
-</SpeechBubble>
-
-
-:: right :: 
-
-## **notes**
-
-- Dear friends administrator of DIRAC's installations, you have one year to migrate to DiracX
-- There's a lot of guesswork in understanding how things will be in one year time, and even more in what will happen after
-- This community **needs** to work together as much as possible
-
-
----
-layout: top-title
-color: gray-light
-align: c
-title: roadmap
----
-
-:: title ::
-
-# The long road to DiracX v1
-
-
-:: content ::
-
-After **DiracX 0.1.0** (the one bringing *tasks* to DiracX, coming **Q1 2026**) there are many areas that will be "free to proceed" ([roadmap](https://diracx.diracgrid.org/en/latest/roadmap/)), in parallel:
-
-<ul class="text-sm">
-  <li>WMS
-    <ul>
-      <li>Pilots machinery (in DIRAC terms: SiteDirectors, Matcher)
-        <ul>
-          <li>this needs to include "Computing Resources"</li>
-        </ul>
-      </li>
-      <li>Jobs description (adoption of CWL)</li>
-    </ul>
-  </li>
-  <li>DMS (effectively needed for WMS to work)
-    <ul>
-      <li>this needs to include "Storage Resources" and "Catalog Resources"
-        <ul>
-          <li>DiracX to Rucio bridge</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>RSS (effectively needed for WMS to work)</li>
-  <li>RMS</li>
-  <li>TS (also CWL)
-    <ul>
-      <li>DIRAC also provides a generic Production System</li>
-    </ul>
-  </li>
-  <li>Accounting and Monitoring</li>
-</ul>
-
-<ul class="text-sm">
-  <li>Caveats:
-    <ul>
-      <li>moving a DIRAC service to a DiracX one</li>
-    </ul>
-  </li>
-</ul>
-
-
-<SpeechBubble position="l" color='amber' shape="round"  v-drag="[680,185,160,180]">
-We need your help on pretty much all these topics
-</SpeechBubble>
-
-
-
-
----
-layout: section
-color: cyan-light
-title: toV9
----
-
-# From DIRAC v8 to v9+0.0.1
-
-
----
-layout: top-title-two-cols
-color: gray-light
-align: c
 title: Users-WhatsNew
 ---
 
@@ -299,7 +161,7 @@ title: Users-WhatsNew
       <li>if a VO is not migrated to IaM, it can't be "enabled" (see later on)</li>
     </ul>
   </li>
-  <li>New <strong>Web app</strong> (which, for DiracX 0.1 will not be of much use)</li>
+  <li>New <strong>Web app</strong> (which, for DiracX 0.0.1 will not be of much use)</li>
   <li>Enriched and modern <strong>CLI</strong> (but not many functionalities in there)</li>
   <li><strong>REST</strong> interface for programmatic usage (for advanced users -- but again, not much user-facing info to use)</li>
 </ul>
@@ -373,6 +235,45 @@ title: toV9-administrator
 
 
 ---
+layout: top-title-two-cols
+color: gray-light
+align: c-lm-lm
+title: chart
+---
+
+:: title :: 
+
+# The Helm Chart <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-helm>
+
+:: left ::
+
+The first thing an admin have to look at is the provided [Helm chart](https://github.com/DIRACGrid/diracx-charts), for which there is a [Unique pointer](https://charts.diracgrid.org/index.yaml)
+
+Why? Because the only supported way to deploy DiracX (and DiracX-Web) is through Kubernetes.
+
+<ul class="text-sm">
+  <li>Effectively the chart is used also for:
+    <ul>
+      <li>DiracX testing (GitHub actions)</li>
+      <li>Local development</li>
+      <li>Running a demo instance</li>
+      <li>Running test and productions instances</li>
+    </ul>
+  </li>
+</ul>
+
+:: right ::
+
+<AdmonitionType type="info" width="300px">
+The helm charts provide **everything**, including MySQL and Opensearch, and iam. 
+This is intended for local development, not for production.
+</AdmonitionType>
+
+<AdmonitionType type="important" width="300px">
+As admin, you will need to create *your* helm chart with what you want to run in production
+</AdmonitionType>
+
+---
 layout: side-title
 color: gray-light
 title: Externals
@@ -392,14 +293,14 @@ Architecturally, you can't run DiracX without:
   <li>MySQL (or MariaDB) (this you always had -- no need to touch it)
     <ul>
       <li>DiracX 0.0.1 has only one new DB <code>DiracXAuthDB</code> (containing tokens)</li>
-      <li><em>NOTE</em>: we tried to use PostgreSQL as an alternative to MySQL, and failed because of "data format" issues, and won't retry in the near future.</li>
+      <li>We tried to use PostgreSQL as an alternative to MySQL, and failed because of "data format" issues, and won't retry in the near future.</li>
     </ul>
   </li>
   <li>OpenSearch (you <em>should</em> have it already)</li>
-  <li>Kubernetes (<strong>NEW</strong>)</li>
-  <li>S3-compatible object store (<strong>NEW</strong>)</li>
+  <li>Kubernetes (<strong>NEW</strong>) for running DiracX services (and tasks, one day</li>
+  <li>S3-compatible object store (<strong>NEW</strong>) for storing the Job Sandboxes </li>
   <li>a Grafana instance (not immediately, but will be needed)</li>
-  <li>OTEL (not immediately, but maybe you will want to have it)</li>
+  <li>OpenTelemetry (not immediately, but maybe you will want to have it)</li>
 </ul>
 
 so, make sure the above are up and running as-a-service.
@@ -473,61 +374,17 @@ title: admins-notes
     You are not there to bother yourself with K3S or MinIO,
     or other infrastructure stuff.
     
-
-    So, 
-    
-    -> DO use "services".
-    -> DO get together, join forces!
-
-    Can some of the institute part of your international collaboration
-    host DiracX services? 
+    Ask yourself: can one of the institutes that are part
+    of your international collaboration host DiracX services? 
     Maybe CERN ?
+
+    If not, DO get together, join forces!
 
   </p>
   <p style="text-align:right; margin-top:20px;">
     With love and affection<br>
   </p>
 </div>
-
-
----
-layout: top-title-two-cols
-color: gray-light
-align: c-lm-lm
-title: chart
----
-
-:: title :: 
-
-# Helm <devicon-helm class="text-3xl align-middle inline-block mx-0"></devicon-helm>
-
-:: left ::
-
-<ul class="text-sm">
-  <li><a href="https://github.com/DIRACGrid/diracx-charts">DiracX Helm chart</a>
-  </li>
-  <li>Used for:
-    <ul>
-      <li>DiracX testing (GitHub actions)</li>
-      <li>Local development instance</li>
-      <li>Running a demo instance</li>
-      <li>Running test and productions instances</li>
-    </ul>
-  </li>
-</ul>
-
-Unique pointer for charts: https://charts.diracgrid.org/index.yaml
-
-:: right ::
-
-
-<AdmonitionType type="info" width="300px">
-The helm charts provide **everything**, including MySQL and Opensearch, and iam. 
-This is intended for local development, not for production.
-</AdmonitionType>
-
-
-
 
 
 ---
@@ -551,7 +408,7 @@ NB:
   - To avoid mistakes, atm this skeleton is "locked" - meaning that only the owner (fstagni) can edit
     - might re-open for this workshop if many contributors
 - There are **many** database changes/updates
-  - the order in which they are done inside the upgrade guide is meaningful, do not change the order!
+  - the order in which they are done inside the upgrade note is meaningful, do not change the order!
 - **You will need a downtime** (at a minimum, do not let users or agents submit new jobs)
   - no need to completely drain the system before: the running jobs will *eventually* complete
 
@@ -586,29 +443,59 @@ title: config
 
 :: title ::
 
-# The DiracX configuration
+# The DiracX configuration, and the DIRAC one
 
 :: content ::
 
-- differences with DIRAC Config
-- entrypoints
-- env variables
-- the DIRAC CS is still meaningful
+<ul class="text-sm">
+  <li>DiracX has "settings" and "configuration"
+    <ul>
+      <li><strong>Settings</strong> (sort of "replacing" the <code>/Systems</code> part of the CS) are only used server side:
+        <ul>
+          <li>There are several 
+            <a href="https://diracx.diracgrid.org/en/latest/admin/reference/env_variables/" target="_blank">
+              environment variables
+            </a> 
+            to set, all starting with <code>DIRACX_</code>. These will need to be set in the values section of the helm chart
+          </li>
+          <li>entry points</li>
+        </ul>
+      </li>
+      <li>The <strong>Configuration</strong> is a single YAML file using <code>git</code> for versioning. 
+          It's available (for clients) through the <code>/api/config/</code> route.
+        <ul>
+          <li>The DIRAC configuration is the source of truth.</li>
+          <li>A 
+            <a href="https://diracx.diracgrid.org/en/latest/admin/how-to/install/convert-cs/" target="_blank">
+              conversion
+            </a> 
+            is needed, the synchronization can be achieved e.g. via a <code>crontab</code>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+The DIRAC Configuration is still meaningful, not only because DIRAC needs to know about DiracX existance, but e.g. DiracX still knows nothing about your Grid resources.
+
+For more info, click [here](https://diracx.diracgrid.org/en/latest/admin/explanations/configuration/)
+
 
 ---
 layout: iframe-right
-title: Web API
+title: embracing
 url: https://diracx.diracgrid.org/en/latest/admin/how-to/install/embracing/
-class: webAPI
 slide_info: false
 color: gray-light
 align: lm
 ---
 
-
-# CS changes
+# CS changes for enabling DiracX functionalities
 
 - IdP
+  - UserSubjects
 - sandboxes
 - Legacy adaptors
 
@@ -638,7 +525,7 @@ title: v9Devs
   - you might need to adapt your extension to it
 - VMDIRAC is no more
 - RSS is mandatory
-- Opensearch for jobs paramers is mandatory
+- Opensearch for jobs parameters is mandatory
 - ARC and ARC6 have been removed, only use AREX
 - In general, many DB changes and large-ish refactoring
 
@@ -652,12 +539,14 @@ title: DIRACCommon
 
 :: title ::
 
-# DIRACCommon : a new package for holding stateless DIRAC utilities
+# DIRACCommon
 
 :: content ::
 
-- Since DiracX can't reliably depend on DIRAC without triggering DIRAC's global state initialization
+- A new package for holding stateless DIRAC utilities
 - Lives [inside DIRAC code](https://github.com/DIRACGrid/DIRAC/tree/integration/dirac-common)
+- Since DiracX can't reliably depend on DIRAC without triggering DIRAC's global state initialization
+  - so, DIRACCommon is a DiracX dependency, not DIRAC
 - Every time DIRAC is tagged, DIRACCommon is tagged too (yes, a bit of an overkill...)
 - Do `pip install DIRACCommon` in your local DIRAC conda environment now
   - **maybe** you will need a `extensionDIRACCommon` package, but most probably not
@@ -671,7 +560,7 @@ align: c-lm-lm
 
 :: title ::
 
-# Code structure
+# DiracX: code structure
 
 :: left ::
 ![alt text](/public/images/code_structure.png)
@@ -680,9 +569,11 @@ align: c-lm-lm
 
 - 8 packages: `diracx-[core, db, logic, routers, api, cli, client, testing]`
   - will be 9 with `diracx-tasks`
-- all of them on [pipy](https://pypi.org/search/?q=diracx), all them tagged at the same time
+  - these are called [namespace packages](https://packaging.python.org/en/latest/guides/packaging-namespace-packages/)
+- all of them on [pipy](https://pypi.org/search/?q=diracx), all of them tagged at the same time
   - for good practice and [isolation](https://github.com/DIRACGrid/diracx/issues/348)
-- each of them have "actual code" in `diracx-$name/src/dirac/$name`
+  - each of them have "actual code" in `diracx-$name/src/diracx/$name`
+
 
 
 ---
@@ -694,34 +585,81 @@ align: c
 
 :: title ::
 
-# Package dependencies
+# DiracX packages dependencies
 
 :: content ::
 
-```mermaid
+```mermaid {scale:0.4}
 flowchart LR
-    dbs["diracx-dbs (sqlalchemy/os)"] -- uses --> core["diracx-core (domain)"]
-    logic["diracx-logic (Dirac)"] -- uses --> dbs & core
-    services["diracx-services (FastAPI)"] -- uses --> logic & core
-    services -- generates --> openapi["OpenAPI"]
-    tasks["diracx-tasks (celery?)"] -- uses  --> logic & core
-    client["diracx-client (autorest)"] -- consumes --> openapi
-    client -- uses --> core
-    api["diracx-api"] -- uses --> client
-    cli["diracx-cli (typer)"] -- uses --> api & client
-     dbs:::Pine
-     logic:::Pine
-     services:::Pine
-     openapi:::Rose
-     tasks:::Pine
+ subgraph frontend["Frontend"]
+        client["diracx-client (autorest)"]
+        api["diracx-api"]
+        cli["diracx-cli (typer)"]
+  end
+ subgraph backend["Backend"]
+        dbs["diracx-db (sqlalchemy/os)"]
+        logic["diracx-logic (Dirac)"]
+        routers["diracx-routers (FastAPI)"]
+  end
+    dbs -. uses .-> core["diracx-core (domain)"]
+    logic -. uses .-> core
+    routers -. uses .-> core
+    tasks["diracx-tasks (celery?)"] -. uses .-> core
+    client -. uses .-> core
+    api -. uses .-> core
+    cli -. uses .-> core
+    logic -- calls --> dbs
+    routers -- calls --> logic
+    tasks -- calls --> logic & api
+    client -- calls through OpenAPI --> routers
+    api -- calls --> client
+    cli -- calls --> api & client
      client:::Sky
      api:::Sky
      cli:::Sky
+     dbs:::Pine
+     logic:::Pine
+     routers:::Pine
+     tasks:::Aqua
     classDef Rose stroke-width:1px, stroke-dasharray:none, stroke:#FF5978, fill:#FFDFE5, color:#8E2236
     classDef Sky stroke-width:1px, stroke-dasharray:none, stroke:#374D7C, fill:#E2EBFF, color:#374D7C
     classDef Pine stroke-width:1px, stroke-dasharray:none, stroke:#254336, fill:#27654A, color:#FFFFFF
+    classDef Aqua stroke-width:1px, stroke-dasharray:none, stroke:#46EDC8, fill:#DEFFF8, color:#378E7A
 ```
 
+---
+layout: top-title
+color: gray-light
+title: images
+align: c
+---
+
+:: title ::
+
+# DiracX container images
+
+:: content ::
+
+Container images are defined at https://github.com/DIRACGrid/container-images
+
+```
+                       ┌──────────────────────────┐
+                 ┌─────┤ diracx/base:YYYY.MM.DD.P ├─────┐
+                 │     └──────────────────────────┘     │
+                 │                                      │
+┌────────────────▼──────────────────┐  ┌────────────────▼───────────────┐
+│ diracx/services-base:YYYY.MM.DD.P │  │ diracx/client-base:YYYY.MM.DD.P │
+└────────────────┬──────────────────┘  └────────────────┬───────────────┘
+                 │                                      │
+     ┌───────────▼────────────┐              ┌──────────▼───────────┐
+     │ diracx/services:v0.X.Y │              │ diracx/client:v0.X.Y │
+     └────────────────────────┘              └──────────────────────┘
+
+```
+
+- Images are built periodically (e.g., every Monday) and tagged as `YYYY.MM.DD.P`.
+- A DiracX release triggers the creation of new `diracx/service` and `diracx/client` images, based on specific `diracx/base` tags.
+- If you have a DiracX extension that extends the client or the router, you will need specific images
 
 ---
 layout: iframe-right
@@ -737,13 +675,24 @@ align: lm
 
 Start with the "Getting Started" guide here on the right. for which you'll basically only need [pixi](https://pixi.sh) -- `pixi` is what DiracX is using instead of conda/mamba/etc (it's basically its successor)
 
-To go further, remember that:
-- for developing databases, you should have a grasp of [sqlalchemy](https://www.sqlalchemy.org/)
-  - we do not use the ORM, just the **Core** part
-- In order to develop routers (the "services"), you should have a grasp of [fastapi](https://fastapi.tiangolo.com/)
-- DiracX uses [typer](https://typer.tiangolo.com/) and [rich](https://rich.readthedocs.io/en/latest/) for beautiful CLI
-- In general, you should have an idea about [pydantic](https://docs.pydantic.dev/latest/)
-
+<ul class="text-sm">
+  <li>for developing databases, you should have a grasp of 
+    <a href="https://www.sqlalchemy.org/" target="_blank">sqlalchemy</a>
+    <ul>
+      <li>we do not use the ORM, just the <strong>Core</strong> part</li>
+    </ul>
+  </li>
+  <li>In order to develop routers (the "services"), you should have a grasp of 
+    <a href="https://fastapi.tiangolo.com/" target="_blank">fastapi</a>
+  </li>
+  <li>DiracX uses 
+    <a href="https://typer.tiangolo.com/" target="_blank">typer</a> and 
+    <a href="https://rich.readthedocs.io/en/latest/" target="_blank">rich</a> for beautiful CLI
+  </li>
+  <li>In general, you should have an idea about 
+    <a href="https://docs.pydantic.dev/latest/" target="_blank">pydantic</a>
+  </li>
+</ul>
 
 
 ---
@@ -756,9 +705,11 @@ color: gray-light
 align: lm
 ---
 
+# The DiracX Client
+
 Since `FastAPI` includes built-in support for [OpenAPI](https://spec.openapis.org/oas/v3.0.3) specifications, the `client` can be generated by [autorest](https://github.com/Azure/AutoRest)
 
-- several languages suppported. Within the DiracX repo we include the python client
+- several languages supported. Within the DiracX repo we include the python client
   - if you want to generate a client in another language (e.g. because your third-party application is developed in Java or Go), you are one CI item away
 - depending on what you do, the client will need to be regenerated
   - e.g. if you change one route
@@ -780,7 +731,7 @@ title: Developing
 few notes:
 1. if you do not feel like studying stuff like SQLAlchemy or FastAPI, there are still many maintenance tasks to do, e.g.
   - improve the CIs
-  - documentation (which can be sometime auto-created)
+  - documentation (which can be sometimes auto-created from the code)
 2. the diracx-charts need improvements (won't be covered within this presentation)
 3. diracx-web will be covered later today
 4. developing a route in diracx is a necessary step for being used, but it is not enough:
@@ -802,9 +753,9 @@ title: TestX
 
 :: content ::
 
-Even if Github CIs will do every "everything", if you want to run integration tests for DiracX locally, you can:
+Even if Github CIs will do "everything" for every commit, if you want to run integration tests for DiracX locally, you can:
 
-- Run a local `uvicorn` server with default configuration: (???? works??)
+- Run a local `uvicorn` server with default configuration:
 
 ```sh
 git clone https://github.com/DIRACGrid/diracx
@@ -856,9 +807,30 @@ AuthDB = "diracx.db.sql:AuthDB"
 JobDB = "<extension>.db.sql:ExtendedJobDB"
 ```
 
-<SpeechBubble position="t" color='amber' shape="round"  v-drag="[400,310,220,140]">
+A full guide will become available [here](https://diracx.diracgrid.org/en/latest/dev/how-to/extend-diracx/)
+
+<SpeechBubble position="t" color='amber' shape="round"  v-drag="[400,350,360,100]">
 For DiracX and DiracX-Web we already provide reference extensions
 </SpeechBubble>
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: FutureExtensionsSuggestions
+---
+
+:: title ::
+
+# Suggestions on DiracX extensions maintenance
+
+:: content ::
+
+First, you should evaluate if you really need one, but if you do we advise to follow the same principles and tools used in diracx, e.g.:
+- follow the same standard practices
+- make heavy use of CI/CD and IAC
+- make sure you are confident in your test suite
+- use [renovate](https://docs.renovatebot.com), or another auto-updater of your packages 
 
 
 ---
@@ -931,6 +903,160 @@ Software stack:
 What is on the left is the certification WebApp, loaded live. Use with caution!
 </AdmonitionType>
 
+
+---
+layout: section
+color: cyan-light
+title: Roadmap
+---
+
+# Roadmap
+
+
+---
+layout: top-title-two-cols
+color: gray-light
+align: c-lm-lm
+title: Timeline
+columns: is-8
+---
+
+:: title ::
+
+# Timeline of the next year
+
+:: left ::
+
+```mermaid {scale:0.5}
+%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
+    timeline
+        section DIRAC and DiracX coexisting (forcefully)
+            Now (Sept 2025) : Release of DIRAC v9.0 and DiracX v0.0.1
+                            : JobStateUpdate service migrated and tested
+                            : Possible adoption by non-LHCb DIRAC users
+            In few weeks : Release DiracX v0.0.2
+                         : Pilot and JobMonitoring services migrated to DiracX (being tested) -- DiracX-Web first practical usage (Jobs Monitoring)
+            Q1 2026 : Release DiracX v0.1.0
+                    : DiracX introduces a task management system
+            Q3 2026 : Release DIRAC v9.1 and 0.1.X (or v0.2.0)
+                    : First DiracX-only service. 
+                    : Adoption of new Pilot security mechanism
+                    : First DiracX replacements for DIRAC agents or executors using DiracX tasks
+```
+
+:: right ::
+
+- There are developments done by stagiare that could not be included in DiracX's first release, so v0.0.2 is close
+- DiracX v0.1.0 will bring "tasks", for replacing DIRAC's *agents*, *executors*, and the RMS machinery (the *RequestExecutingAgent*)
+- We will need a DIRAC v9.1 because there will be database changes (some PRs already in *draft*)
+
+---
+layout: top-title-two-cols
+color: gray-light
+align: c-lm-lm
+title: Timeline-long
+---
+
+:: title ::
+
+# In 1 year and more
+
+:: left ::
+
+```mermaid {scale:0.6}
+%%{init: { 'logLevel': 'debug', 'theme': 'base', 'timeline': {'disableMulticolor': true}}}%%
+    timeline
+        section DIRAC and DiracX coexisting (forcefully)
+            Q4 2026 : DIRAC v8 EOL (by the next workshop)
+        section Possible standalone DiracX
+            Q4 2027 : DiracX v1.0
+```
+
+<SpeechBubble position="l" color='amber' shape="round"  v-drag="[360,125,160,180]">
+NB: **very** indicative guess, maybe not for everyone (e.g. not for LHCb).
+</SpeechBubble>
+
+
+:: right :: 
+
+## **notes**
+
+- Dear friends administrator of DIRAC's installations, you have one year to migrate to DiracX
+- There's a lot of guesswork in understanding how things will be in one year time, and even more in what will happen after
+- This community **needs** to work together as much as possible
+
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: roadmapToV1
+---
+
+:: title ::
+
+# The long road towards DiracX v1
+
+:: content ::
+
+After **DiracX 0.1.0** (the one bringing *tasks* to DiracX, coming **Q1 2026**) there are many areas that will be "free to proceed" ([roadmap](https://diracx.diracgrid.org/en/latest/roadmap/)), in parallel:
+
+<ul class="text-sm">
+  <li>WMS
+    <ul>
+      <li>Pilots machinery (in DIRAC terms: SiteDirectors, Matcher)
+        <ul>
+          <li>this needs to include "Computing Resources"</li>
+        </ul>
+      </li>
+      <li>Jobs description (adoption of CWL)</li>
+    </ul>
+  </li>
+  <li>DMS (effectively needed for WMS to work)
+    <ul>
+      <li>this needs to include "Storage Resources" and "Catalog Resources"
+        <ul>
+          <li>DiracX to Rucio bridge</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>RSS (effectively needed for WMS to work)</li>
+  <li>RMS (also)</li>
+  <li>TS (also CWL)
+    <ul>
+      <li>DIRAC also provides a generic Production System</li>
+    </ul>
+  </li>
+  <li>Accounting and Monitoring</li>
+</ul>
+
+<SpeechBubble position="l" color='amber' shape="round"  v-drag="[680,185,160,180]">
+We need your help on pretty much all these topics
+</SpeechBubble>
+
+
+---
+layout: top-title
+color: gray-light
+align: c
+title: caveats
+---
+
+:: title ::
+
+# The long road towards DiracX v1 : caveats
+
+:: content ::
+
+## technical
+- moving a **DIRAC service to a DiracX one** is not pain-free
+  - the whole service has to be moved "at once"
+  - a re-organization of the DIRAC code is often necessary, and this is for experienced developers
+- moving a **DIRAC agent to a DiracX task(s)** will have similar issues
+
+## people
+- ...LHC and LHCb
 
 ---
 layout: section
@@ -1008,10 +1134,7 @@ title: summary
 
 :: right ::
 
-<ul class="text-base">
-  <li>DiracX, "the neXt Dirac incarnation", is here!
-  </li>
-</ul>
+DiracX, "the neXt Dirac incarnation", is here!
 
 
 ---
@@ -1062,11 +1185,3 @@ title: credits/people
 <div class="grid-item col-span-3 text-center mt-180px mb-auto font-size-1.5rem">
     <strong>Questions?</strong>
 </div>
-
----
-layout: section
-color: cyan-light
-title: Backup
----
-
-# Backup
